@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <title>MySQL Wrapper</title>
+
+    <style>
+        table {
+            width: 70%;
+            font: 17px Calibri;
+        }
+        table, th, td {
+            border: solid 1px #DDD;
+            border-collapse: collapse;
+            padding: 2px 3px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body onload="createTable()">
+    <!--THE CONTAINER WHERE WE'll ADD THE DYNAMIC TABLE-->
+    <div id="cont"></div>
+    <!--<p><input type="button" id="bt" value="Submit Data" onclick="submit()" /></p> -->
+<table>
+	<tr>
+		<td colspan="8" style="text-align: left;">
+			<p>
+	        <input type="button" id="addRow" class="btn btn-success " value="Add Row" onclick="addRow()"/>
+	    </p>
+		</td>
+	</tr>
+		<tr>
+	      <td>Filename to Save As:</td>
+	      <td><input id="inputFileNameToSaveAs"></input></td>
+	      <td><button onclick="saveTextAsFile()">Save Text to File</button></td>
+	      </tr>
+			</table>
+</body>
+
+<script>
+
+function saveTextAsFile()
+{
+	var myTab = document.getElementById('empTable');
+	var values = new Array();
+	var names = new Array();
+	var gmails = new Array();
+	var phones = new Array();
+	var insert_ql = new Array();
+	// LOOP THROUGH EACH ROW OF THE TABLE.
+	for (row = 1; row < myTab.rows.length - 1; row++) {
+			for (c = 0; c < myTab.rows[row].cells.length; c++) {   // EACH CELL IN A ROW.
+
+					var element = myTab.rows.item(row).cells[c];
+					//console.log(element)
+					if (element.childNodes[0].getAttribute('name') == 'Name') {
+							names.push(element.childNodes[0].value);
+					}
+					if (element.childNodes[0].getAttribute('name') == 'Gmail') {
+							gmails.push(element.childNodes[0].value);
+					}
+					if (element.childNodes[0].getAttribute('name') == 'Phone') {
+							phones.push(element.childNodes[0].value);
+					}
+
+			}
+	}
+    values = [names, gmails, phones];
+		console.log(values);
+		for (var i = 0; i <values[0].length; i++) {
+			name=values[0][i]
+			mail=values[1][i]
+      phone=values[2][i]
+		  insert_ql[i]='INSERT INTO Customers VALUES ('+name+' ,'+mail+' ,'+phone+');'+"\n"
+			//console.log(i+insert_ql[i]);
+		}
+		var textToSaveAsBlob = new Blob([insert_ql+" "], {type:"text/plain"});
+		console.log(textToSaveAsBlob)
+		var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+		var fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value;
+
+
+    var downloadLink = document.createElement("a");
+    downloadLink.download = fileNameToSaveAs;
+    downloadLink.innerHTML = "Download File";
+    downloadLink.href = textToSaveAsURL;
+    downloadLink.onclick = destroyClickedElement;
+    downloadLink.style.display = "none";
+    document.body.appendChild(downloadLink);
+
+    downloadLink.click();
+}
+
+function destroyClickedElement(event)
+{
+    document.body.removeChild(event.target);
+}
+
+function loadFileAsText()
+{
+    var fileToLoad = document.getElementById("fileToLoad").files[0];
+
+    var fileReader = new FileReader();
+    fileReader.onload = function(fileLoadedEvent)
+    {
+        var textFromFileLoaded = fileLoadedEvent.target.result;
+        document.getElementById("inputTextToSave").value = textFromFileLoaded;
+    };
+    fileReader.readAsText(fileToLoad, "UTF-8");
+}
+    // ARRAY FOR HEADER.
+    var arrHead = new Array();
+    arrHead = ['Name', 'Gmail', 'Phone','Tools',' '];      // ADD OR REMOVE VALUES IN THE ARRAY FOR TABLE HEADERS.
+
+    // FIRST CREATE A TABLE STRUCTURE BY ADDING A FEW HEADERS AND
+    // ADD THE TABLE TO YOUR WEB PAGE.
+    function createTable() {
+        var empTable = document.createElement('table');
+        empTable.setAttribute('id', 'empTable');            // SET THE TABLE ID.
+
+        var tr = empTable.insertRow(-1);
+
+        for (var h = 0; h < arrHead.length; h++) {
+            var th = document.createElement('th');          // TABLE HEADER.
+            th.innerHTML = arrHead[h];
+            tr.appendChild(th);
+        }
+
+        var div = document.getElementById('cont');
+        div.appendChild(empTable);    // ADD THE TABLE TO YOUR WEB PAGE.
+    }
+
+    // ADD A NEW ROW TO THE TABLE.s
+    function addRow() {
+        var empTab = document.getElementById('empTable');
+
+        var rowCnt = empTab.rows.length;        // GET TABLE ROW COUNT.
+        var tr = empTab.insertRow(rowCnt);      // TABLE ROW.
+        tr = empTab.insertRow(rowCnt);
+
+        for (var c = 0; c < arrHead.length; c++) {
+            var td = document.createElement('td');          // TABLE DEFINITION.
+            td = tr.insertCell(c);
+
+            if (c == 4) {           // FIRST COLUMN.
+                // ADD A BUTTON.
+                var button = document.createElement('input');
+
+                // SET INPUT ATTRIBUTE.
+                button.setAttribute('type', 'button');
+								button.setAttribute('class',"btn btn-danger");
+                button.setAttribute('value', 'Remove');
+
+                // ADD THE BUTTON's 'onclick' EVENT.
+                button.setAttribute('onclick', 'removeRow(this)');
+
+                td.appendChild(button);
+            }
+            else {
+                // CREATE AND ADD TEXTBOX IN EACH CELL.
+                var ele = '';
+
+                if (c==0){
+									  ele=document.createElement('input');
+									  ele.setAttribute('type', 'text');
+									  ele.setAttribute('name', 'Name');
+									  ele.setAttribute('value', '');
+								}
+								if (c==1){
+									 ele=document.createElement('input');
+									  ele.setAttribute('type', 'text');
+										ele.setAttribute('name', 'Gmail');
+										ele.setAttribute('value', '');
+								}
+								if (c==2){
+									 ele=document.createElement('input');
+									  ele.setAttribute('type', 'text');
+										ele.setAttribute('name', 'Phone');
+										ele.setAttribute('value', '');
+								}
+								if (c==3){
+									 ele=document.createElement('input');
+									  ele.setAttribute('type', 'text');
+										ele.setAttribute('name', 'Tools');
+										ele.setAttribute('value', '');
+								}
+
+                td.appendChild(ele);
+            }
+        }
+    }
+
+    // DELETE TABLE ROW.
+    function removeRow(oButton) {
+        var empTab = document.getElementById('empTable');
+        empTab.deleteRow(oButton.parentNode.parentNode.rowIndex);       // BUTTON -> TD -> TR.
+    }
+
+    // EXTRACT AND SUBMIT TABLE DATA.
+    function submit() {
+        var myTab = document.getElementById('empTable');
+        var values = new Array();
+				var names = new Array();
+        // LOOP THROUGH EACH ROW OF THE TABLE.
+        for (row = 1; row < myTab.rows.length - 1; row++) {
+            values = new Array();
+						for (c = 0; c < myTab.rows[row].cells.length; c++) {   // EACH CELL IN A ROW.
+
+                var element = myTab.rows.item(row).cells[c];
+								if (element.childNodes[0].getAttribute('name') == 'Name') {
+										values.push(element.childNodes[0].value);
+								}
+								if (element.childNodes[0].getAttribute('name') == 'Gmail') {
+										values.push(element.childNodes[0].value);
+								}
+								if (element.childNodes[0].getAttribute('name') == 'Phone') {
+										values.push(element.childNodes[0].value);
+								}
+            }
+
+        }
+    }
+</script>
+</html>
