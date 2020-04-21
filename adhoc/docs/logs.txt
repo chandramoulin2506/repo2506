@@ -1,0 +1,25 @@
+Response:
+{
+  "body": "\"Hello from Lambda!\"",
+  "statusCode": 200
+}
+
+Request ID:
+"0d613e7f-299e-43e4-a6e7-681d6e4c4f9e"
+
+Function Logs:
+START RequestId: 0d613e7f-299e-43e4-a6e7-681d6e4c4f9e Version: $LATEST
+{"aws_request_id": "0d613e7f-299e-43e4-a6e7-681d6e4c4f9e", "module": "lambda_function", "time": "2020-04-21T12:53:13.774Z", "message": "{'key2': 'value2', 'key1': 'value1'}", "extra_data": {}, "levelname": "INFO"}END RequestId: 0d613e7f-299e-43e4-a6e7-681d6e4c4f9e
+REPORT RequestId: 0d613e7f-299e-43e4-a6e7-681d6e4c4f9e	Duration: 0.45 ms	Billed Duration: 100 ms	Memory Size: 128 MB	Max Memory Used: 34 MB	Init Duration: 1.13 ms	
+
+
+
+Cloudwatch logs:
+{
+    "aws_request_id": "1b2b1f43-ea34-4e9a-b7f9-f376527c34a1",
+    "module": "lambda_function",
+    "time": "2020-04-20T20:14:40.678Z",
+    "message": "{'key2': 'value2', 'key1': 'value1'}",
+    "extra_data": {},
+    "levelname": "INFO"
+}
