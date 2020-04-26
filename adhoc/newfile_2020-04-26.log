@@ -1,0 +1,13 @@
+2020-04-26 10:54:04,385 https://wiki.melissadata.com/images/0/0c/DQT_API_GeoCoder_RG.pdf
+2020-04-26 10:54:14,648 File is downlaoded in : /home/cm2506/pysparknb/melissa_geocoder.pdf 
+2020-04-26 10:54:14,653 /home/cm2506/pysparknb/melissa_geocoder.pdf
+2020-04-26 10:54:14,654 abosulte_file_path :
+2020-04-26 10:54:14,654 /home/cm2506/Documents/data/input.xlsx
+2020-04-26 10:54:14,709 Number of rows extarcted : 25 
+2020-04-26 10:54:14,710 Number of cols extarcted : 6 
+2020-04-26 10:54:14,710 {'col_name': ['geocode ', 'geopoint ', 'cbsacode ', 'cbsadivisioncode', 'cbsadivisionlevel', 'cbsadivisiontitle', 'cbsalevel ', 'cbsatitle ', 'censusblock', 'censustract', 'countyfips', 'countyname', 'errorcode ', 'latitude', 'longitude', 'placecode ', 'placename ', 'statuscode ', 'timezone', 'timezonecode', 'distance', 'geohash'], 'data_type': ['string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string', 'string']}
+2020-04-26 10:54:14,727 <class 'pandas.core.frame.DataFrame'>
+2020-04-26 10:54:18,232 <class 'pyspark.sql.dataframe.DataFrame'>
+2020-04-26 10:54:29,227 db_name : cm2506 tablename: target_tbl
+2020-04-26 10:54:29,696 <class 'pyspark.sql.dataframe.DataFrame'>
+2020-04-26 10:54:31,404 Success!!

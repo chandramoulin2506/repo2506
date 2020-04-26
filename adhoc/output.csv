@@ -1,0 +1,14 @@
+,col_name,data_type,matching_ind
+0,cbsadivisioncode,string,Matched
+1,cbsadivisionlevel,string,Matched
+2,cbsadivisiontitle,string,Matched
+3,censusblock,string,Matched
+4,censustract,string,Matched
+5,countyfips,string,Matched
+6,countyname,string,Matched
+7,latitude,string,Matched
+8,longitude,string,Matched
+9,timezone,string,Matched
+10,timezonecode,string,Matched
+11,distance,string,Matched
+12,geohash,string,Matched
