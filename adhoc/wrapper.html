@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Cars</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+  .btn-primary{
+    background-color: #5a2e6f;
+    border-color:#5a2e6f;
+  }
+  .footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 200%;
+   height: 100px;
+   background-color: #5a2e6f;
+   color: white;
+}
+.logo {
+  position:absolute;
+  top:10px;
+  left: 10px;
+  font-family: "bold Calibri", sans-serif;
+  font-size: 120%;
+}
+.time{
+  position:absolute;
+  top:10px;
+  right: 150px;
+  font-family: "Calibri", sans-serif;
+  font-size: 120%;
+}
+  .div  {
+    font-family: "Calibri", sans-serif;
+    font-size: 120%;
+  }
+  .fakeimg {
+    height: 100px;
+    background: #aaa;
+  }
+  .jumbotron{
+    background: #fff;;
+  }
+  .navbar-default {
+    background-color: #ffffff;
+    border-color: #E7E7E7;
+}
+.ribbon {
+  position:absolute;
+  top:20px;
+  right: 10px;
+  font-family: "Calibri", sans-serif;
+  font-size: 120%;
+}
+.melissa{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+  </style>
+  <script>
+  function startTime() {
+    var today = new Date();
+    var date = today.getDate();
+    var month=today.getMonth();
+    var year=today.getFullYear();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    date=checkTime(date);
+    month=checkTime(month);
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('txt').innerHTML =
+    date+ "-"+month+ "-"+year+ "  "+ h + ":" + m + ":" + s;
+    var t = setTimeout(startTime, 500);
+  }
+
+  function checkTime(i) {
+    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+  }
+  </script>
+</head>
+<body onload="startTime()">
+  <nav class="navbar navbar-default">
+    <img src="C:\Users\hp\Desktop\adhoc\api\static\img\logo.jpg"  color ="white" align="left" class="logo">
+    <div class="container-fluid">      
+      <img src="C:\Users\hp\Desktop\adhoc\api\static\img\melissa_new.jpg"  color ="white" align="center" class="melissa">
+      <img src="C:\Users\hp\Desktop\adhoc\api\static\img\tim.jpg"  color ="white" align="right" class="time">
+      <div id="txt" align="center" class ="ribbon"></div>
+    </div>
+  </nav>
+<div class="jumbotron vertical-center">
+  <div class="container">
+    <form form action='/cars' method='POST'>
+      <label for="fname">First name:</label>
+      <input type="text" id="fname" name="fname"><br><br>
+      <label for="lname">Last name:</label>
+      <input type="text" id="lname" name="lname"><br><br>
+       <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>
