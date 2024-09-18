@@ -107,6 +107,14 @@ def on_success_callback(context):
     task_instance = context['task_instance']
     ti = context['ti']
     
+    """
+    try_number is set as 1 even before the task runs for the first time in airflow.
+    Once the task starts running, the try_number is immediately incremented to 2.
+    
+    If the task fails, it will still show try_number=2, indicating the task will retry on the next attempt.
+    On a retry, try_number would be 3, meaning it's now making its third overall attempt.
+    """
+    
     attempt_number = ti.try_number - 1  # Subtract 1 to get actual attempt count
 
     if attempt_number > 1:
