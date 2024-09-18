@@ -6,6 +6,24 @@ from airflow.operators.dummy import DummyOperator # type: ignore
 from airflow.utils.dates import days_ago
 from datetime import timedelta
 
+"""
+Summary:
+---------
+This DAG, 'dag_with_retry_queue', demonstrates a workflow with three tasks (task_1, task_2, task_3) and a validation step.
+The DAG has the following key features:
+1. **Configuration Validation**: The DAG begins with a check for required configuration keys ('id', 'name') using the `validate_task`. 
+   If the keys are present, it proceeds to `task_1`; if not, it exits via `exit_task`.
+   
+2. **Task Retry Logic**: Task_2 simulates failure, triggering Airflow's retry mechanism. On failure, the DAG logs the failure and
+   calls a public API to update the task status to "failed." The retry attempts continue until the task succeeds or runs out of retries.
+
+3. **Success/Failure Callbacks**: 
+   - **Failure**: When a task fails, the `on_failure_callback` is triggered, which calls an API to log the task as "failed."
+   - **Success**: On success, the `on_success_callback` checks if the task has succeeded after a failure. If the task failed previously and is being retried, it calls the API to log the task as "running."
+
+4. **API Call on Task Status Update**: On task failure or re-running, a public API is called (using `jsonplaceholder.typicode.com/posts`) to simulate updating the task status externally.
+"""
+
 # Define the custom macro function
 def get_user_cd(dag_run):
     """
