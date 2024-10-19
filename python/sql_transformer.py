@@ -46,6 +46,10 @@ def process_sql_file(file_path):
     for temp_table, replaced_table in temp_table_mappings.items():
         content = re.sub(re.escape(temp_table), replaced_table, content)
 
+    # Remove any duplicate prefixes like "my-project.my_dataset.my-project.my_dataset"
+    duplicate_pattern = re.compile(rf'{project_id}\.{dataset_id}\.{project_id}\.{dataset_id}\.')
+    content = re.sub(duplicate_pattern, f'{project_id}.{dataset_id}.', content)
+
     return content
 
 def write_output_files():
